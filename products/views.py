@@ -17,7 +17,8 @@ def add_product(request):
             name=name,
             description=description,
             price=price,
-            production_date=production_date
+            production_date=production_date,
+            image=request.FILES.get("image")
         )
 
         return redirect("product_list")
@@ -27,9 +28,13 @@ def add_product(request):
 
 def product_list(request):
     products = ProductModel.objects.all()
+    
+    context = {
+        "products": products
+    }
 
     return render(
         request,
         "product_list.html",
-        {"products": products}
+        context
     )
